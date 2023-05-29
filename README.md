@@ -37,5 +37,5 @@ The retro game is designed with two panels, each controlled by a player. The obj
 
 You can pause and resume the game at any time using the following buttons:
 
-- Pause: Click the "Pause" button or press the 'P' key to pause the game.
-- Start: Click the "Start" button or press the 'S' key to resume the game.
+- Pause: Click the "Pause" button.
+- Start: Click the "Start" button.
