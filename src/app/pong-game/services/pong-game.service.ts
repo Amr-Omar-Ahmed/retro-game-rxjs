@@ -8,9 +8,6 @@ export class PongGameService {
   private isGameStartedSubject = new BehaviorSubject<boolean>(false);
   isGameStarted$ = this.isGameStartedSubject.asObservable();
 
-  // private isGameResettedSubject$ = new BehaviorSubject<boolean>(false);
-  // isGameResetted$ = this.isGameResettedSubject$.asObservable();
-
   private isGamePuasedSubject = new BehaviorSubject<boolean>(false);
   isGamePuased$ = this.isGamePuasedSubject.asObservable();
 
