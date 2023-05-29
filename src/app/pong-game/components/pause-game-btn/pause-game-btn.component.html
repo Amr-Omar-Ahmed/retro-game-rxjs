@@ -1,0 +1,10 @@
+<button
+  class="pause-game-btn"
+  [ngClass]="{
+    'pause-game-btn--paused': pongGameService.isGamePuased$ | async
+  }"
+  (click)="pauseGame()"
+  *ngIf="pongGameService.isGameStarted$ | async"
+>
+  {{ (pongGameService.isGamePuased$ | async) ? "Resume Game" : "Pause Game" }}
+</button>

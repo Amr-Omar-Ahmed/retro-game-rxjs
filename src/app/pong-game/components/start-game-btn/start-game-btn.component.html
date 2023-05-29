@@ -1,0 +1,7 @@
+<button
+  class="start-game-btn"
+  (click)="startGame()"
+  *ngIf="!(pongGameService.isGameStarted$ | async)"
+>
+  Start Game
+</button>

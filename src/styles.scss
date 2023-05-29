@@ -1,1 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.player {
+  position: absolute;
+  transform: translateY(-50%);
+  width: 1vh;
+  height: 10vh;
+}
+
+.game-header,
+.game-footer {
+  position: relative;
+}
+
+.game-header {
+  height: 10vh;
+}
+
+.game-footer {
+  height: 10vh;
+}
+
+.game-body {
+  height: calc(100vh - 20vh);
+  background-color: black;
+}

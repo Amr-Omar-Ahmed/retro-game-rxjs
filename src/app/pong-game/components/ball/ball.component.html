@@ -1,0 +1,6 @@
+<div
+  class="ball"
+  [style.left.vw]="(ballPosition$ | async)?.x"
+  [style.top.vh]="(ballPosition$ | async)?.y"
+  #ball
+></div>
