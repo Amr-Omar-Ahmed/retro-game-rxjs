@@ -1,6 +1,7 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import {
   Observable,
+  Subscription,
   combineLatest,
   filter,
   fromEvent,
@@ -13,14 +14,19 @@ import { PongGameService } from '../../services/pong-game.service';
   template: '',
   styleUrls: ['./player-base.component.scss'],
 })
-export class PlayerBaseComponent implements AfterViewInit {
+export class PlayerBaseComponent implements AfterViewInit, OnDestroy {
   events: Array<string>;
   playerMove$: Observable<any>;
+  subscription: Subscription;
 
   constructor(protected pongGameService: PongGameService) {}
 
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
   ngAfterViewInit(): void {
-    combineLatest([
+    this.subscription = combineLatest([
       this.pongGameService.isGameStarted$,
       this.pongGameService.isGamePuased$,
     ])

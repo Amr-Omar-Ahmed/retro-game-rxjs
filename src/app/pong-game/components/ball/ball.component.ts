@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { PongGameService } from '../../services/pong-game.service';
 import { PONG_GAME_CONFIG } from '../../game.config';
 import { convertVhToPx, randomNumber } from 'src/app/utilities';
@@ -9,7 +9,7 @@ import { convertVhToPx, randomNumber } from 'src/app/utilities';
   templateUrl: './ball.component.html',
   styleUrls: ['./ball.component.scss'],
 })
-export class BallComponent implements AfterViewInit {
+export class BallComponent implements AfterViewInit, OnDestroy {
   @ViewChild('ball', { static: true }) ballRef: any;
   private ballPostionSubject = new BehaviorSubject<{ x: number; y: number }>({
     x: 50,
@@ -26,19 +26,31 @@ export class BallComponent implements AfterViewInit {
 
   isGamePaused = false;
 
+  gameStartedsubscription: Subscription;
+  gamePuasedsubscription: Subscription;
+
   constructor(public pongGameService: PongGameService) {}
 
-  ngAfterViewInit(): void {
-    this.pongGameService.isGameStarted$.subscribe((isGameStarted: Boolean) => {
-      if (isGameStarted) {
-        this.intializeBallConfig();
-        requestAnimationFrame(this.listenToBallMovementChanges.bind(this));
-      }
-    });
+  ngOnDestroy(): void {
+    this.gameStartedsubscription?.unsubscribe();
+    this.gamePuasedsubscription?.unsubscribe();
+  }
 
-    this.pongGameService.isGamePuased$.subscribe((isGamePaused) => {
-      this.isGamePaused = isGamePaused;
-    });
+  ngAfterViewInit(): void {
+    this.gameStartedsubscription =
+      this.pongGameService.isGameStarted$.subscribe(
+        (isGameStarted: Boolean) => {
+          if (isGameStarted) {
+            this.intializeBallConfig();
+            requestAnimationFrame(this.listenToBallMovementChanges.bind(this));
+          }
+        }
+      );
+    this.gamePuasedsubscription = this.pongGameService.isGamePuased$.subscribe(
+      (isGamePaused) => {
+        this.isGamePaused = isGamePaused;
+      }
+    );
   }
 
   setRandomBallHeading() {
